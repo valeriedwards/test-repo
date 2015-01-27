@@ -1,0 +1,141 @@
+\documentclass[12pt]{amsart}
+
+% special math macros ------------------------------
+\usepackage{amsmath, setspace, amsrefs, amssymb, amsthm, latexsym, url, verbatim, amsfonts}
+
+\usepackage{epsf}
+% Define Theorem Styles ----------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}{\mdseries\scshape Definition}
+
+\begin{document}
+\title{Working Towards Hensel's Lemma}
+\author{Valeri Edwards}
+\thanks{A special thanks to Professor Robinson for her support and guidance.}
+\date{June 20, 2012}
+
+\maketitle
+\section{excerpt}
+
+
+The $p$-adic absolute value provides us with an alternative concept of the distance between two rational numbers. Namely, two rational numbers are considered to be close to each other if their difference is divisible by a large power of some fixed prime $p$.  In order to accommodate our new metric, we enlarge the rational number field $\mathbb{Q}$ in an analogous way to the process of constructing the real numbers from the  rational numbers.  
+
+
+To construct the $p$-adic numbers we fix a prime number $p \ne \infty$. Let $S$ be the set of Cauchy sequences $\{a_i\}$ of rational numbers such that, for any $\epsilon > 0$, there exists an $N$ such that $\mid a_i - a^{\prime}_i \mid_p < \epsilon$ if both $i, i^{\prime} > N$. We call two such Cauchy sequences $\{a_i\}$ and $\{b_i\}$ equivalent if $\mid a_i - b_i \mid_p \rightarrow 0$ as $i \rightarrow \infty$.  We define the set $\mathbb{Q}_p$ to be the set of equivalence classes of $p$-adic Cauchy sequences.
+
+\footnote{As mentioned in the introduction,  unlike the real numbers, every $p$-adic number has exactly one representative Cauchy sequence. While $1.000 \dots  = 0.999\dots \in \mathbb{R}$, there are no such exceptions in $\mathbb{Q}_p$. If two $p$-adic expansions converge to the same $p$-adic number all their digits must be the same.}
+
+
+
+ Let us now consider the proof of the lemma that will enable us to prove that every equivalence class $a$ in $\mathbb{Q}_p$ has exactly one representative Cauchy sequence of the form $\{a_n\}$ with certain special properties. 
+
+\begin{lemma}
+If $x \in \mathbb{Q}$ and $\mid x \mid_p \le 1$, then for each $i \in \mathbb{Z}$ there exists an integer $\alpha \in \mathbb{Z}$ such that $\mid \alpha - x \mid_p \le p^{-i}$. The integer $\alpha$ can be chosen in the set $\{0, 1, 2, 3, \cdots, p^i - 1 \}$.
+\end{lemma}
+
+
+\begin{proof}
+
+Let $x \in \mathbb{Q}$ where $a, b \in \mathbb{Z}$ such that $x = a/b$ and $x$ is written in lowest terms. Since $\mid x \mid_p \le 1$, it follows that $p$ does not divide $b$, and hence $b$ and $p^i$ are relatively prime. So we can find integers $m$ and $n$ such that: $mb + np^i = 1$ using the Euclidean algorithm.  Let $\alpha = am$. The idea is that $mb$ differs from $1$ by a $p$-adically small amount, so that $m$ is a good approximation to $1/b$ and so $am$ is a good approximation to $x = a/b$. More precisely, we have:
+
+
+\begin{align}
+\mid \alpha - x \mid_p & = \mid am - (a/b) \mid_p = \mid a/b \mid_p \mid mb - 1\mid_p \nonumber\\
+&\le \mid mb - 1 \mid_p = \mid np^i \mid_p = \mid n \mid_p/p^i \le 1/p^i.\nonumber
+\end{align}
+
+Note that the first inequality comes from the fact that $\mid a/b \mid_p \le 1$ by our hypothesis. The second inequality interestingly come from the fact that $n \in \mathbb{Z}$ so $\mid n \mid_P \le 1$.
+Using the $ultra$-$metric$ property we can always take the integer $\alpha = am$ and add multiples of $p^i$ to it to get a new $\alpha$.  By adding multiples of $p^i$ we can always get an integer $\alpha$ such that  $0 \le \alpha < p^i$ for which $\mid \alpha - x \mid_p \le p^{-i}$. So once we choose an $i$ we can always find $\alpha$ so that $\alpha$ is within $p^{-i}$ of $x$ and $0 \le \alpha \le p^i - 1$.
+\end{proof}
+
+To illustrate the constructive nature of the lemma, we have included some examples of the process of finding $\alpha$ given some $x$ and some $i$.
+Again, let us consider some examples to help aid our understanding. 
+Let  $p = 5$ and let $x$ be the rational number $9/4$ where $a = 9 $ and $b = 4$.  Then  $\mid 9/4 \mid_5 = 1 \le 1$ using the $p$-adic definition of the absolute value. If we take $i = 1$, it is easy to see that $4$ and $5$ are relatively prime, thus the  gcd$(4, 5) = 1$. If we consider the greatest common divisor of $4$ and $5$ as a linear combination with integers $m$ and $n$ satisfying the equation $4m + 5n = 1$, we can solve for $m,n$,
+
+\begin{align}
+5 & = 4(1) + 1 \nonumber \\
+&1 = 5(1) + 4(-1).\nonumber
+\end{align}
+
+Thus the integers $m$ and $n$ that satisfy $4m + 5n = 1 $ are $n = 1$ and $m = -1$ or $m = -1 + 5t$ and $n = 1-4t$ for $ t \in \mathbb{Z}$. Since $\alpha = am = 9 \cdot -1 = -9$  we add $5$ to $\alpha$ until we have $\alpha \in \{1, 2, 3, 4 \}$, i.e., $(-9 + 5) + 5 = 1$.   Thus $\alpha = a_0 = 1$, giving us our first term in the $5$-adic decimal expansion of $9/4$.
+
+To find the next term in the $5$-adic expansion of $9/4$, we repeat the process above. Let $i = 2$ then the gcd$(4, 25) = 1$ since $4$ and $25$ are relatively  prime.
+
+\begin{align}
+25 & = 4(6) + 1 \nonumber\\
+&1 = 25(1) + 4(-6).\nonumber
+\end{align}
+
+Thus the integers $m$ and $n$ that satisfy $mb + np^i = $ are $n = 1$ and $m = -6$. To find $\alpha$ we notice that $am = 9 \cdot -6 = -54$. If we add $-54 + 25$ we will get $-29$. If we add $25$ again to $-29$ we get $-4$. Adding $25$ one last time to $-4$ we get $21$  Thus $\alpha = a_0 + a_i5 = 1 + 4 \cdot 5 = 21$.  Thus the second term, $a_1$, in the $5$-adic expansion of $9/4$ is $4$. 
+
+If we repeat this process a third time we will get the third term in the $5$-adic expansion of $9/4$. If we let $i = 3$ and we find the gcd$(4, 125)$ we see that 
+
+\begin{align}
+125 & = 4(31) + 1 \nonumber\\
+&1 = 125(1) + 4(-31) \nonumber.
+\end{align}
+
+Thus the integers $m$ and $n$ that satisfy $mb + np^i = 1 $ are $n = 1$ and $m = -31$. To find $\alpha$ we notice that $am = 9 \cdot -31 = -279$. If we add $-279 + (3) 125$ we will get $96$. Since we know that the $5$-adic expansion for the first two terms of $9/4 = 1+ 4(5)$ to find $a_2$ all we have to do is solve the equation $1 + 4(5) + a_25^2 = 96$ and we see that $a_2 = 3$. Thus the first three terms of the $5$-adic expansion for $9/4$ are $1 + 4(5) + 3(5^2) = 96$.
+
+
+
+In contrast, let us consider the example, where again, we will fix a prime number $p = 5$.  Let $x$ be the rational number $-9/4$ such  $a = -9 $ and $b = 4$.  Then  $\mid 9/4 \mid_5 = 1 \le 1$ using the $p$-adic definition of the absolute value. It is easy to see that $4$ and $5$ are relatively prime, thus the  gcd$(4, 5) = 1$. If we consider the greatest common divisor of $4$ and $5$ as a linear combination with integers $m$ and $n$ satisfying the equation $mb + np^i = 1$, we can solve for $m,n$ when $i = 1$,
+
+\begin{align}
+5 & = 4(1) + 1\nonumber \\
+&1 = 5(1) + 4(-1).\nonumber
+\end{align}
+
+Thus the integers $m$ and $n$ that satisfy $4m + 5n = 1 $ are $n = 1$ and $m = -1$ or $m = -1 + 5t$ and $n = 1-4t$ for $ t \in \mathbb{Z}$ In particular notice that integer values when $x = -9/4$ for $m$ and $n$ are identical to the integer values for $m$ and $n$ when $x = 9/4$. However, the values for $\alpha$ are not identical.   Since $\alpha = am = -9 \cdot -1 = 9$ , thus  we  must subtract $5$ from  $\alpha$ until we have $\alpha \in \{1, 2, 3, 4 \}$, i.e., $(9-5)  = 4$.   Thus $\alpha = a_0 = 4$, giving us our first term in the $5$-adic decimal expansion of $-9/4$.
+
+To find the next term in the $5$-adic expansion of $-9/4$, we repeat the process above. Let $i = 2$ then the gcd$(4, 25) = 1$ since $4$ and $25$ are relatively  prime.
+
+\begin{align}
+25 & = 4(6) + 1 \nonumber \\
+&1 = 25(1) + 4(-6).\nonumber
+\end{align}
+
+Thus the integers $m$ and $n$ that satisfy $mb + np^i = $ are $n = 1$ and $m = -6$. To find $\alpha$ we notice that $am = -9 \cdot -6 = 54$. If we add $54 - 25$ we will get $29$. If we subtract $25$ again to $29$ we get $4$. By simple algebra we are able see that if $a_0 = 4$ the then $a_1 = 0$ if for $i = 2$ we have the partial sum $4 + 0(5) = 4$.
+
+If we repeat this process a third time we will get the third term in the $5$-adic expansion of $-9/4$. If we let $i = 3$ and we find the gcd$(4, 125)$ we see that 
+
+\begin{align}
+125 & = 4(31) + 1  \nonumber\\
+&1 = 125(1) + 4(-31).\nonumber
+\end{align}
+
+Thus the integers $q$ and $n$ that satisfy $mb + np^i = 1 $ are $n = 1$ and $m = -31$. To find $\alpha$ we notice that $am = -9 \cdot -31 = 279$. Given $279$ if we subtract  $2 \cdot 125$ we will get $29$, which is exactly  what we would expect given that the partial sum of the first three terms is $4 + 0 \cdot 5  + 1 \cdot 5^2 = 29$  where $a_2 = 1$.
+
+ Since the $p$-adic absolute value of $\mid 9/4 \mid_5 = \mid -9/4 \mid_5 = 1$, when we sum the terms of the $5$-adic Cauchy sequences for $9/4$ and $-9/4$ the result is $0$, and thus these sequences differ only by a null sequence. We now have the  necessary background to consider the proof  that every $p$-adic number has a unique representative Cauchy sequence. 
+
+
+
+
+
+
+
+
+\begin{thebibliography}{1}
+
+
+\bibitem{abstract} Fernado Q. Gouvea {\em $p$-adic Numbers, An Introduction} 1993 , pgs 67-72:
+Springer-Verlag., New York, NY.
+
+
+
+\bibitem{abstract} Neal Koblitz {\em $p$-adic Numbers, $p$-adic Analysis, and Zeta-Functions} 1977 , pgs 10-12:
+Springer-Verlag., New York, NY.
+
+\end{thebibliography}
+
+
+
+
+
+\end{document}
